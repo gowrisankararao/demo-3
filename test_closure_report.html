@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Test Cycle Closure Report</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 960px; margin: 32px auto; color: #222; }
+    h1, h2 { color: #183b66; }
+    table { border-collapse: collapse; width: 100%; margin-bottom: 16px; }
+    th, td { border: 1px solid #bbb; padding: 8px; text-align: left; }
+    th { background: #eaf1f8; }
+    .recommendation { font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Test Cycle Closure Report</h1>
+
+  <h2>1. Summary</h2>
+  <p>The money transfer test cycle executed 15 test cases: 9 passed, 5 failed, and 1 was blocked. The 60.0% pass rate and open Critical defect indicate that the cycle did not meet exit criteria.</p>
+
+  <h2>2. Scope and objectives</h2>
+  <p>The cycle assessed authentication, transfer, validation, reliability, UI, security, and performance. Objectives were to verify successful transfers, transaction integrity, secure authentication, validation feedback, responsive UI behavior, and peak-load performance.</p>
+
+  <h2>3. Execution metrics</h2>
+  <table>
+    <tr><th>Metric</th><th>Result</th></tr>
+    <tr><td>Total test cases</td><td>15</td></tr>
+    <tr><td>Passed</td><td>9</td></tr>
+    <tr><td>Failed</td><td>5</td></tr>
+    <tr><td>Blocked</td><td>1</td></tr>
+    <tr><td>Pass rate</td><td>60.0%</td></tr>
+    <tr><td>Critical defects</td><td>1</td></tr>
+    <tr><td>Major defects</td><td>3</td></tr>
+    <tr><td>Minor defects</td><td>1</td></tr>
+  </table>
+
+  <h2>4. Defect summary</h2>
+  <table>
+    <tr><th>Defect ID</th><th>Test ID</th><th>Severity</th><th>Description</th></tr>
+    <tr><td>DEF-101</td><td>TC03</td><td>Critical</td><td>OTP was not received within 60 seconds.</td></tr>
+    <tr><td>DEF-102</td><td>TC06</td><td>Major</td><td>Duplicate debit occurred after an automatic retry during network loss.</td></tr>
+    <tr><td>DEF-103</td><td>TC09</td><td>Minor</td><td>Confirmation button was hidden on 5-inch screens.</td></tr>
+    <tr><td>DEF-104</td><td>TC12</td><td>Major</td><td>Invalid beneficiary account number received generic rather than field-level validation.</td></tr>
+    <tr><td>DEF-105</td><td>TC15</td><td>Major</td><td>Response time exceeded the 5-second target under 500-user peak load.</td></tr>
+  </table>
+
+  <h2>5. Key insights</h2>
+  <ul>
+    <li>OTP delivery and authentication recovery block secure transfer completion.</li>
+    <li>DEF-102 is the highest financial-risk issue and also blocks history verification.</li>
+    <li>Small-screen UI and generic validation reduce usability and transfer success.</li>
+    <li>Peak-load delays can encourage repeated submissions and abandoned transfers.</li>
+  </ul>
+
+  <h2>6. Recommendations</h2>
+  <ol>
+    <li>DEF-102: Add idempotency and server-side duplicate-transaction prevention.</li>
+    <li>DEF-101: Improve OTP delivery monitoring, resend, expiry, and recovery.</li>
+    <li>DEF-105: Scale and monitor against the 5-second peak-load target.</li>
+    <li>DEF-103: Fix responsive confirmation controls.</li>
+    <li>DEF-104: Implement field-level beneficiary validation.</li>
+    <li>Re-run complete transfer, retry, authentication, UI, and load regression coverage.</li>
+  </ol>
+
+  <h2>7. Open risks and blocked tests</h2>
+  <ul>
+    <li>DEF-101 may prevent users from completing authenticated transfers.</li>
+    <li>DEF-102 may cause duplicate debits.</li>
+    <li>DEF-105 and DEF-103 present performance and usability risks.</li>
+    <li>TC13 remains blocked until DEF-102 is resolved.</li>
+  </ul>
+
+  <h2>8. Exit criteria assessment</h2>
+  <table>
+    <tr><th>Exit criterion</th><th>Target</th><th>Actual</th><th>Assessment</th></tr>
+    <tr><td>No open Critical defects</td><td>0</td><td>1 open: DEF-101</td><td><strong>Not met</strong></td></tr>
+    <tr><td>Pass rate</td><td>&ge; 95%</td><td>60.0%</td><td><strong>Not met</strong></td></tr>
+  </table>
+
+  <h2>9. Release recommendation</h2>
+  <p class="recommendation">No-go for release.</p>
+  <p>Resolve DEF-101 and DEF-102 first, complete all blocked and failed test coverage, and repeat the cycle until both exit criteria are achieved.</p>
+</body>
+</html>
